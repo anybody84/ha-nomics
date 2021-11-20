@@ -1,0 +1,11 @@
+{
+    "domain": "nomics",
+    "name": "Nomics",
+    "documentation": "https://github.com/anybody84/ha-nomics",
+    "issue_tracker": "https://github.com/anybody84/ha-nomics/issues",
+    "dependencies": [],
+    "codeowners": ["@anybody84"],
+    "requirements": ["nomics-python==3.2.0"],
+    "iot_class": "cloud_polling",
+    "version": "v0.0.1"
+}
