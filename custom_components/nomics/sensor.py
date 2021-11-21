@@ -19,6 +19,7 @@ from .const import (
     ATTRIBUTION,
     DOMAIN,
     DEFAULT_ICON,
+    SPECIAL_ICONS,
     SCAN_INTERVAL_MINUTES,
     DEFAULT_NAME,
 )
@@ -84,6 +85,8 @@ class NomicsSensor(SensorEntity):
     @property
     def icon(self):
         """Return the icon to use in the frontend, if any."""
+        if self._currency in SPECIAL_ICONS:
+            self._icon = SPECIAL_ICONS[self._currency]
         return self._icon
 
     @property
@@ -92,7 +95,7 @@ class NomicsSensor(SensorEntity):
         return self._api.available
 
     def update(self):
-        """Get the latest data from Alphavantage."""
+        """Get the latest data from Nomics."""
         self._api.update()
 
 
