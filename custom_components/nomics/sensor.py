@@ -73,6 +73,7 @@ class NomicsSensor(SensorEntity):
             manufacturer=MANUFACTURER,
             name=DEFAULT_NAME,
         )
+        self._attr_unique_id = f"{DOMAIN}-{self._currency}".lower()
 
     @property
     def name(self):
