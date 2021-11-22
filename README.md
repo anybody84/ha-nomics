@@ -4,6 +4,8 @@
 # Nomics Sensor
 
 This is a custom Nomics integration which can be used in HomeAssistant.
+
+## Example
 ![example](https://github.com/anybody84/ha-nomics/blob/master/example.png)
 
 ## Getting Started
@@ -21,10 +23,10 @@ After adding a custom repository you can use HACS to install this integration us
 
 ### Manual
 
-To install this integration manually you have to download [*nomics.zip*](https://github.com/anybody84/ha-nomics/releases/latest/download/nomics.zip) extract its contents to `config/custom_components/nomics` directory:
+To install this integration manually you have to download [*nomics.zip*](https://github.com/anybody84/ha-nomics/releases/latest/download/nomics.zip) extract its contents to `config/custom_components/nomics` directory. Navigate to the `config` directory and run the following commands:
 ```bash
-mkdir -p custom_components/nomics
-cd custom_components/nomics
+mkdir custom_components
+cd custom_components
 wget https://github.com/anybody84/ha-nomics/releases/latest/download/nomics.zip
 unzip nomics.zip
 rm nomics.zip
@@ -34,15 +36,18 @@ rm nomics.zip
 
 | Key | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
-|`api_key`|`string`|`True`|-|Api key from the Nomics portal|
-|`quote`|`list`|`True`|-|List of currency codes|
+|`api_key`|`string`|`true`|-|Api key from the Nomics portal|
+|`quote`|`list`|`true`|-|List of currency codes|
+|`display_currency`|`string`|`false`|`USD`|The currency to use for diplaying exchange rates|
 
 ### Example configuration
 
 ```yaml
-platform: nomics
-api_key: "this-is-your-api-key"
-quote:
-- ETH
-- BTC
+sensor:
+  - platform: nomics
+    api_key: "this-is-your-api-key"
+    display_currency: "PLN"
+    quote:
+      - ETH
+      - BTC
 ```
