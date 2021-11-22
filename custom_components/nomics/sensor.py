@@ -14,6 +14,7 @@ from homeassistant.const import (
     CONF_NAME,
     CURRENCY_DOLLAR,
     CONF_QUOTE,
+    CONF_DISPLAY_CURRENCY,
 )
 
 from .const import (
@@ -39,7 +40,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_API_KEY): cv.string,
         vol.Required(CONF_QUOTE): vol.All(cv.ensure_list, [cv.string]),
-        vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
+        vol.Optional(CONF_DISPLAY_CURRENCY, default=CURRENCY_DOLLAR): cv.string,
     }
 )
 
@@ -49,9 +50,10 @@ def setup_platform(hass, config, async_add_entities, discovery_info=None):
 
     api_key = config[CONF_API_KEY]
     quotes = config[CONF_QUOTE]
-    api = NomicsAPI(api_key, quotes)
+    display_currency = config[CONF_DISPLAY_CURRENCY]
+    api = NomicsAPI(api_key, quotes, display_currency)
 
-    sensors = [NomicsSensor(hass, api, quote) for quote in quotes]
+    sensors = [NomicsSensor(hass, api, quote, display_currency) for quote in quotes]
 
     async_add_entities(sensors, True)
 
@@ -59,12 +61,13 @@ def setup_platform(hass, config, async_add_entities, discovery_info=None):
 class NomicsSensor(SensorEntity):
     """Representation of a Sensor."""
 
-    def __init__(self, hass, api, quote):
+    def __init__(self, hass, api, quote, display_currency):
         """Initialize the sensor."""
         self._hass = hass
         self._api = api
         self._state = None
         self._currency = quote
+        self._display_currency = display_currency
         self._icon = DEFAULT_ICON
         self._attrs = {ATTR_ATTRIBUTION: ATTRIBUTION}
         self._attr_device_info = DeviceInfo(
@@ -90,7 +93,7 @@ class NomicsSensor(SensorEntity):
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement."""
-        return CURRENCY_DOLLAR
+        return self._display_currency
 
     @property
     def icon(self):
@@ -144,12 +147,13 @@ class NomicsSensor(SensorEntity):
 class NomicsAPI:
     """Get the latest data and update the states."""
 
-    def __init__(self, api_key, quotes):
+    def __init__(self, api_key, quotes, display_currency):
         self._api_key = api_key
         self._quotes = quotes
         self.data = {}
         self.available = True
         self.api = Nomics(self._api_key)
+        self._display_currency = display_currency
         self.update()
 
     @Throttle(SCAN_INTERVAL)
@@ -157,7 +161,7 @@ class NomicsAPI:
         """Get the latest data from Nomics."""
         ids = ",".join(self._quotes)
         try:
-            result = self.api.Currencies.get_currencies(ids=ids)
+            result = self.api.Currencies.get_currencies(ids=ids, convert=self._display_currency)
             if result:
                 self.data = json.loads(json.dumps(result, indent=4))
                 self.available = True
