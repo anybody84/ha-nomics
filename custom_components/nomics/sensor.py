@@ -66,7 +66,7 @@ class NomicsSensor(SensorEntity):
         self._state = None
         self._currency = quote
         self._icon = DEFAULT_ICON
-        self._attrs: dict[str, Any] = {ATTR_ATTRIBUTION: ATTRIBUTION}
+        self._attrs = {ATTR_ATTRIBUTION: ATTRIBUTION}
         self._attr_device_info = DeviceInfo(
             entry_type="service",
             identifiers={(DOMAIN, self._currency)},
@@ -105,17 +105,25 @@ class NomicsSensor(SensorEntity):
         return self._api.available
 
     @property
-    def extra_state_attributes(self) -> dict[str, Any]:
+    def extra_state_attributes(self):
         """Return the state attributes."""
         currency_data = self.get_currency_data()
         if currency_data:
             for attr in ATTRIBUTES:
-                self._attrs[attr] = currency_data[attr]
+                try:
+                    self._attrs[attr] = currency_data[attr]
+                except KeyError:
+                    self._attrs[attr] = None
+                    _LOGGER.warning("Failed to get the attribute '%s' for %s", attr, self._currency)
 
             for attr in HIST_ATTRIBUTES:
-                self._attrs[f"{attr}_price_change_pct"] = round(
-                    float(currency_data[attr]["price_change_pct"]) * 100, 2
-                )
+                try:
+                    self._attrs[f"{attr}_price_change_pct"] = round(
+                        float(currency_data[attr]["price_change_pct"]) * 100, 2
+                    )
+                except KeyError:
+                    self._attrs[f"{attr}_price_change_pct"] = None
+                    _LOGGER.warning("Failed to get the history attribute '%s' for %s", attr, self._currency)
         return self._attrs
 
     def update(self):
@@ -153,6 +161,6 @@ class NomicsAPI:
             if result:
                 self.data = json.loads(json.dumps(result, indent=4))
                 self.available = True
-        except Exception:
-            _LOGGER.error("Unable to fetch data from Nomics")
+        except Exception as err:
+            _LOGGER.error("Unable to fetch data from Nomics: %s", err)
             self.available = False
