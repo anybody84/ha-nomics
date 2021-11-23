@@ -46,8 +46,8 @@ rm nomics.zip
 sensor:
   - platform: nomics
     api_key: "this-is-your-api-key"
-    display_currency: "PLN"
     quote:
       - ETH
       - BTC
+    display_currency: PLN
 ```

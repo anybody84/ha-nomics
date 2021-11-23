@@ -27,6 +27,7 @@ from .const import (
     MANUFACTURER,
     ATTRIBUTES,
     HIST_ATTRIBUTES,
+    DEFAULT_CURRENCY,
 )
 from homeassistant.helpers.entity import DeviceInfo
 import homeassistant.helpers.config_validation as cv
@@ -40,7 +41,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_API_KEY): cv.string,
         vol.Required(CONF_QUOTE): vol.All(cv.ensure_list, [cv.string]),
-        vol.Optional(CONF_DISPLAY_CURRENCY, default=CURRENCY_DOLLAR): cv.string,
+        vol.Optional(CONF_DISPLAY_CURRENCY, default=DEFAULT_CURRENCY): cv.string,
     }
 )
 
@@ -117,7 +118,9 @@ class NomicsSensor(SensorEntity):
                     self._attrs[attr] = currency_data[attr]
                 except KeyError:
                     self._attrs[attr] = None
-                    _LOGGER.warning("Failed to get the attribute '%s' for %s", attr, self._currency)
+                    _LOGGER.warning(
+                        "Failed to get the attribute '%s' for %s", attr, self._currency
+                    )
 
             for attr in HIST_ATTRIBUTES:
                 try:
@@ -126,7 +129,11 @@ class NomicsSensor(SensorEntity):
                     )
                 except KeyError:
                     self._attrs[f"{attr}_price_change_pct"] = None
-                    _LOGGER.warning("Failed to get the history attribute '%s' for %s", attr, self._currency)
+                    _LOGGER.warning(
+                        "Failed to get the history attribute '%s' for %s",
+                        attr,
+                        self._currency,
+                    )
         return self._attrs
 
     def update(self):
@@ -161,7 +168,9 @@ class NomicsAPI:
         """Get the latest data from Nomics."""
         ids = ",".join(self._quotes)
         try:
-            result = self.api.Currencies.get_currencies(ids=ids, convert=self._display_currency)
+            result = self.api.Currencies.get_currencies(
+                ids=ids, convert=self._display_currency
+            )
             if result:
                 self.data = json.loads(json.dumps(result, indent=4))
                 self.available = True
