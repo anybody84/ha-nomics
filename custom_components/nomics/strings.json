@@ -1,0 +1,22 @@
+{
+    "config":{
+      "step":{
+        "user":{
+          "title":"Configure Nomics integration.",
+          "description":"Set up Nomics integration. To generate API key go to https://p.nomics.com/cryptocurrency-bitcoin-api",
+          "data":{
+            "api_key":"[%key:common::config_flow::data::api_key%]",
+            "name":"[%key:common::config_flow::data::name%]",
+            "quote":"List of currencies to track",
+            "display_currency":"Display currency"
+          }
+        }
+      },
+      "error":{
+        "invalid_api_key":"[%key:common::config_flow::error::invalid_api_key%]"
+      },
+      "abort":{
+        "already_configured":"[%key:common::config_flow::abort::already_configured_device%]"
+      }
+    }
+  }

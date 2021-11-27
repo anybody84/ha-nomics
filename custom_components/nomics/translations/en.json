@@ -1,0 +1,22 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Device is already configured"
+        },
+        "error": {
+            "invalid_api_key": "Invalid API key"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "api_key": "API Key",
+                    "display_currency": "Display currency",
+                    "name": "Name",
+                    "quote": "List of currencies to track"
+                },
+                "description": "Set up Nomics integration. To generate API key go to https://p.nomics.com/cryptocurrency-bitcoin-api",
+                "title": "Configure Nomics integration."
+            }
+        }
+    }
+}
