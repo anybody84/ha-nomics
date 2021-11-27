@@ -7,5 +7,6 @@
     "codeowners": ["@anybody84"],
     "requirements": ["nomics-python==3.2.0"],
     "iot_class": "cloud_polling",
-    "config_flow": true
+    "config_flow": true,
+    "version": "0.1.0"
 }
