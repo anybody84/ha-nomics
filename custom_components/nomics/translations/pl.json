@@ -1,0 +1,22 @@
+{
+  "config":{
+    "abort":{
+      "already_configured":"Usługa została już skonfigurowana"
+    },
+    "error":{
+      "invalid_api_key":"Niepoprawny klucz API"
+    },
+    "step":{
+      "user":{
+        "data":{
+          "api_key":"Klucz API",
+          "display_currency":"Waluta, w jakiej wyświetlane będą kursy",
+          "name":"Nazwa",
+          "quote":"Lista walut do śledzenia"
+        },
+        "description":"Ustaw integrację Nomics. Aby wygenerować klucz API odwiedź https://p.nomics.com/cryptocurrency-bitcoin-api",
+        "title":"Skonfiguruj integrację Nomics."
+      }
+    }
+  }
+}
