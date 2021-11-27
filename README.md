@@ -1,12 +1,13 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/docs/faq/custom_repositories)
-![GitHub All Releases](https://img.shields.io/github/downloads/anybody84/ha-nomics/total)
+![GitHub Release](https://img.shields.io/github/release/anybody84/ha-nomics.svg?style=popout)
+![GitHub Downloads](https://img.shields.io/github/downloads/anybody84/ha-nomics/total)
 
 # Nomics Sensor
 
 This is a custom Nomics integration which can be used in HomeAssistant.
 
 ## Example
-![example](https://github.com/anybody84/ha-nomics/blob/master/example.png)
+![Example](https://github.com/anybody84/ha-nomics/blob/master/example.png)
 
 ## Getting Started
 Before using the Nomics integration, sign up for a [free API key here](https://p.nomics.com/cryptocurrency-bitcoin-api).
@@ -17,14 +18,21 @@ This integration can be added to HACS as a [custom repository](https://hacs.xyz/
 * URL: `https://github.com/anybody84/ha-nomics`
 * Category: `Integration`
 
-After adding a custom repository you can use HACS to install this integration using user interface by going to `HACS > Integrations > Explore & Download Repositories` and searching for `Nomics`.
+After adding a custom repository you can use HACS to install this integration using user interface by going to **HACS** > **Integrations** > **Explore & Download Repositories and searching** for `Nomics`.
 
 
 ## Configuration
 
-This can be done directly from the UI. Go to `Configuration > Integrations > Add Integration` and search for `Nomics`. Please provide your `api_key` and other details in the configuration window as shown below:
+This can be done directly from the UI. Go to **Configuration** > **Integrations** > **Add Integration** and search for `Nomics`. 
 
-![example](https://github.com/anybody84/ha-nomics/blob/master/config_example.png)
+You can also use the MyHomeAssistant link:
+
+[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=nomics)
+
+
+Please provide your `api_key` and other details in the configuration window as shown below:
+
+![Config example](https://github.com/anybody84/ha-nomics/blob/master/config_example.png)
 
 More details about the configuration options:
 
