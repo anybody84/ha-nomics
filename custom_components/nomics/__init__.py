@@ -114,7 +114,7 @@ class NomicsAPI:
         self._api = Nomics(api_key)
 
     def get_currencies(self, ids, display_currency):
-        data = self._api.Currencies.get_currencies(ids=ids, convert=display_currency)
+        data = self._api.Currencies.get_currencies(ids=ids, convert=display_currency, per_page=100)
         return data
 
     async def get_exchange_rates(self):
